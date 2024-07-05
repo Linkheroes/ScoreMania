@@ -14,11 +14,6 @@ struct ContentView: View {
                 .tabItem {
                     Label("Games", systemImage: "gamecontroller")
                 }
-            
-            ProfilView()
-                .tabItem {
-                    Label("Profil", systemImage: "person")
-                }
         }
     }
 }

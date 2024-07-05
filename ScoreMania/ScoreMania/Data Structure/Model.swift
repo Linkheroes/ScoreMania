@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Games: Codable {
     var name: String
     var gameIcon: String
 }
 
-struct Players: Codable, Equatable {
+struct Players: Equatable, Identifiable {
+    var id: UUID
     var name: String
     var score: Int
+    var color: Color
 }
