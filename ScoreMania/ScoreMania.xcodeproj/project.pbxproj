@@ -21,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E1278A962C383C7400DA31D0 /* ScoreMania.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScoreMania.entitlements; sourceTree = "<group>"; };
 		E14DF8FF2C37DA6A006F9C64 /* RegisterPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPlayer.swift; sourceTree = "<group>"; };
 		E1AE44C92C371919009D2C5E /* ScoreMania.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScoreMania.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1AE44CC2C371919009D2C5E /* ScoreManiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreManiaApp.swift; sourceTree = "<group>"; };
@@ -65,6 +66,7 @@
 		E1AE44CB2C371919009D2C5E /* ScoreMania */ = {
 			isa = PBXGroup;
 			children = (
+				E1278A962C383C7400DA31D0 /* ScoreMania.entitlements */,
 				E1AE44EA2C372440009D2C5E /* Data Structure */,
 				E1AE44E72C3723AA009D2C5E /* Components */,
 				E1AE44DA2C371AA9009D2C5E /* Views */,
@@ -321,6 +323,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScoreMania/ScoreMania.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScoreMania/Preview Content\"";
@@ -338,7 +341,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.linkheroes.ScoreMania;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -356,6 +359,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScoreMania/ScoreMania.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScoreMania/Preview Content\"";
@@ -373,7 +377,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.linkheroes.ScoreMania;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
