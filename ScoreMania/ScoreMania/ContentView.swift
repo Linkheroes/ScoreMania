@@ -2,20 +2,24 @@
 //  ContentView.swift
 //  ScoreMania
 //
-//  Created by Alexandre Ricard on 04/07/2024.
+//  Created by Alexandre on 04/07/2024.
 //
 
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView() {
+            GameSelectionView()
+                .tabItem {
+                    Label("Games", systemImage: "gamecontroller")
+                }
+            
+            ProfilView()
+                .tabItem {
+                    Label("Profil", systemImage: "person")
+                }
         }
-        .padding()
     }
 }
 

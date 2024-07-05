@@ -2,7 +2,7 @@
 //  ScoreManiaApp.swift
 //  ScoreMania
 //
-//  Created by Alexandre Ricard on 04/07/2024.
+//  Created by Alexandre on 04/07/2024.
 //
 
 import SwiftUI
