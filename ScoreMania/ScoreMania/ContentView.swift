@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject var matchManager = MatchManager()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack() {
+            if matchManager.isGameOver {
+                GameOverView(matchManager: matchManager)
+            } else if matchManager.inGame {
+                GameView(matchManager: matchManager)
+            } else {
+                MenuView(matchManager: matchManager)
+            }
+        }
+        .onAppear(perform: {
+            matchManager.authenticatePlayer()
+        })
     }
 }
 
