@@ -13,9 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack() {
-            if matchManager.isGameOver {
-                GameOverView(matchManager: matchManager)
-            } else if matchManager.inGame {
+            if matchManager.inGame {
                 GameView(matchManager: matchManager)
             } else {
                 MenuView(matchManager: matchManager)

@@ -9,3 +9,14 @@
 "play.offline" = "PLAY OFFLINE";
 "play.online" = "PLAY ONLINE";
 "game.loose" = "GAME OVER";
+"game.bottom.text" = "Actual score: ";
+"guess" = "Guess";
+"winner" = "You win !";
+"winner.sentence" = "Your overall score has increased by 1!";
+"looser" = "Game Over";
+"looser.sentence" = "You have loose this game\nYou can re match your opponent !";
+"null" = "No winner";
+"null.sentence" = "No winner during this game\nYou can re match your opponent !";
+"rematch" = "Rematch !";
+"cancel" = "Back to menu";
+"pending.connection" = "Connection in progress";

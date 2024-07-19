@@ -11,6 +11,8 @@ import GameKit
 class MatchManager: NSObject, ObservableObject {
     @Published var inGame = false;
     @Published var isGameOver = false;
+    @Published var isWinner = false;
+    @Published var isNull = false;
     @Published var authenticationState = PlayerAuthState.authenticating
     
     @Published var currentlyPlaying = false
@@ -21,6 +23,11 @@ class MatchManager: NSObject, ObservableObject {
     @Published var shapePlaying = ""
     
     @Published var game = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    
+    @Published var canReMatch = true;
+    var otherPlayerReMatch = false;
+    @Published var localPlayerReMatch = false;
+    @Published var playerScore = 0
     
     var leaderboardsID = "mania.games.wons"
     
@@ -62,8 +69,8 @@ class MatchManager: NSObject, ObservableObject {
     
     func startMatchmaking() {
         let request = GKMatchRequest()
-        let minPlayers = 2
-        let maxPlayers = 2
+        request.minPlayers = 2
+        request.maxPlayers = 2
         
         let matchmakingVC = GKMatchmakerViewController(matchRequest: request)
         matchmakingVC?.matchmakerDelegate = self
@@ -77,6 +84,7 @@ class MatchManager: NSObject, ObservableObject {
         otherPlayer = match?.players.first
         
         sendString("began:\(playerUUIDKey)")
+        resetGame()
     }
     
     func receivedString(_ message: String) {
@@ -87,6 +95,7 @@ class MatchManager: NSObject, ObservableObject {
         
         switch messagePrefix {
             case "began":
+                resetGame()
                 if playerUUIDKey == parameter {
                     playerUUIDKey = UUID().uuidString
                     sendString("began:\(playerUUIDKey)")
@@ -115,15 +124,30 @@ class MatchManager: NSObject, ObservableObject {
                 break
             case "win":
                 isGameOver = true
-                inGame = false
-                resetGame()
             
                 break
             case "null":
-                inGame = false
-                resetGame()
+                isNull = true
         
-            break
+                break
+            case "quit":
+                isWinner = true
+                canReMatch = false
+            
+                winGame()
+                break
+            case "rematch":
+                otherPlayerReMatch = true
+            
+                if (localPlayerReMatch && otherPlayerReMatch) {
+                    startGame(newMatch: match!)
+                }
+            
+                break
+            case "norematch":
+                canReMatch = false;
+                
+                break
             default:
                 break
         }
@@ -131,27 +155,26 @@ class MatchManager: NSObject, ObservableObject {
     
     func resetGame() {
         game = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        otherPlayerReMatch = false
+        localPlayerReMatch = false
+        isWinner = false
+        isGameOver = false
+        isNull = false
+        canReMatch = true
+        inGame = true
     }
     
     func winGame() {
-        var score: Int = 0
+        isWinner = true
         
-        GKLeaderboard.loadLeaderboards(
-            IDs: [self.leaderboardsID]
-        ) { leaderboards, _ in
-            leaderboards?[0].loadEntries(
-                for: [self.currentPlayer],
-                timeScope: .allTime)
-            { player, _, _ in
-                
-                score = player!.score
-            }
-        }
+        print("Score get to game center : \(self.playerScore)")
         
-        score += 1
+        self.playerScore += 1
+        
+        print("Score after win rate : \(self.playerScore)")
         
         GKLeaderboard.submitScore(
-            score,
+            self.playerScore,
             context: 0,
             player: self.currentPlayer,
             leaderboardIDs: [self.leaderboardsID]
@@ -160,6 +183,23 @@ class MatchManager: NSObject, ObservableObject {
         }
         
         reportAchievement(identifier: "mania.achievement.first", percentComplete: 100)
+    }
+    
+    func loadGlobalScore() {
+        GKLeaderboard.loadLeaderboards(
+            IDs: [self.leaderboardsID]
+        ) { leaderboards, _ in
+            leaderboards?[0].loadEntries(
+                for: [self.currentPlayer],
+                timeScope: .allTime)
+            { localPlayerEntry, _, error in
+                if let error = error {
+                    print("Error loading scores: \(error.localizedDescription)")
+                } else if let localPlayerEntry = localPlayerEntry {
+                    self.playerScore = localPlayerEntry.score
+                }
+            }
+        }
     }
     
     func reportAchievement(identifier: String, percentComplete: Double) {

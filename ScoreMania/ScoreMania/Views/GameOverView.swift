@@ -15,10 +15,26 @@ struct GameOverView: View {
             Spacer ()
             
             Text("game.loose")
-                .font(.system(size: 65, weight: .black, design: .rounded))
+                .font(.system(size: 45, weight: .black, design: .rounded))
                 .foregroundStyle(Color(uiColor: .systemRed))
             
             Spacer()
+            
+            Button {
+                matchManager.isGameOver = false
+                matchManager.sendString("rematch")
+            } label: {
+                Text("Rematch")
+                    .font(.system(size: 25, weight: .bold, design: .rounded))
+            }
+            .disabled(matchManager.authenticationState != .authenticated || matchManager.inGame)
+            .padding(.vertical, 20)
+            .padding(.horizontal, 50)
+            .background(
+                Capsule(style: .circular)
+                    .fill(
+                        Color(uiColor: .systemTeal))
+            )
             
             Button {
                 matchManager.isGameOver = false
@@ -40,7 +56,7 @@ struct GameOverView: View {
         }
         .foregroundStyle(.white)
         .frame(maxWidth: .infinity)
-        .background(Color(uiColor: .black))
+        .background(Image("background").resizable().scaledToFill().ignoresSafeArea())
     }
 }
 

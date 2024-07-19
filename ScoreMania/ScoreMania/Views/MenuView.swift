@@ -22,7 +22,7 @@ struct MenuView: View {
             Button {
                 matchManager.startMatchmaking()
             } label: {
-                Text(matchManager.authenticationState != .authenticated ? "play.offline" : "play.online")
+                Text(matchManager.authenticationState != .authenticated ? "pending.connection" : "play.online")
                     .font(.system(size: 25, weight: .bold, design: .rounded))
             }
             .disabled(matchManager.authenticationState != .authenticated || matchManager.inGame)
@@ -32,13 +32,25 @@ struct MenuView: View {
                 Capsule(style: .circular)
                     .fill(matchManager.authenticationState != .authenticated || matchManager.inGame ? Color(uiColor: .systemGray2) : Color(uiColor: .systemRed))
             )
+            .padding(.bottom)
             
-            Spacer()
+            /*Button {
+                
+            } label: {
+                Text("play.offline")
+                    .font(.system(size: 25, weight: .bold, design: .rounded))
+            }
+            .padding(.vertical, 20)
+            .padding(.horizontal, 20)
+            .background(
+                Capsule(style: .circular)
+                    .fill(Color(uiColor: .systemBlue))
+            )*/
 
         }
         .foregroundStyle(.white)
         .frame(maxWidth: .infinity)
-        .background(Color(uiColor: .black))
+        .background(Image("background").resizable().scaledToFill().ignoresSafeArea())
     }
 }
 
