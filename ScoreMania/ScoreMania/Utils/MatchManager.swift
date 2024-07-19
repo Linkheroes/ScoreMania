@@ -23,6 +23,8 @@ class MatchManager: NSObject, ObservableObject {
     
     @Published var game = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
     
+    var leaderboardsID = "mania.games.wons"
+    
     var match: GKMatch?
     var otherPlayer: GKPlayer?
     var currentPlayer = GKLocalPlayer.local
@@ -115,12 +117,86 @@ class MatchManager: NSObject, ObservableObject {
             case "win":
                 isGameOver = true
                 inGame = false
+                resetGame()
             
                 break
+            case "null":
+                inGame = false
+                resetGame()
+        
+            break
             default:
                 break
         }
     }
+    
+    func resetGame() {
+        game = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    }
+    
+    func winGame() {
+        var score: Int = 0
+        
+        GKLeaderboard.loadLeaderboards(
+            IDs: [self.leaderboardsID]
+        ) { leaderboards, _ in
+            leaderboards?[0].loadEntries(
+                for: [self.currentPlayer],
+                timeScope: .allTime)
+            { player, _, _ in
+                
+                score = player!.score
+            }
+        }
+        
+        score += 1
+        
+        GKLeaderboard.submitScore(
+            score,
+            context: 0,
+            player: self.currentPlayer,
+            leaderboardIDs: [self.leaderboardsID]
+        ) { error in
+            print("Update score -- \(error)")
+        }
+        
+        reportAchievement(identifier: "mania.achievement.first", percentComplete: 100)
+    }
+    
+    func reportAchievement(identifier: String, percentComplete: Double) {
+            GKAchievement.loadAchievements { achievements, error in
+                if let error = error {
+                    print("Error loading achievements: \(error.localizedDescription)")
+                    return
+                }
+
+                var achievementAlreadyReported = false
+                if let achievements = achievements {
+                    for achievement in achievements {
+                        if achievement.identifier == identifier && achievement.isCompleted {
+                            achievementAlreadyReported = true
+                            break
+                        }
+                    }
+                }
+
+                if !achievementAlreadyReported {
+                    let achievement = GKAchievement(identifier: identifier)
+                    achievement.percentComplete = percentComplete
+                    achievement.showsCompletionBanner = true
+
+                    GKAchievement.report([achievement]) { error in
+                        if let error = error {
+                            print("Error reporting achievement: \(error.localizedDescription)")
+                        } else {
+                            print("Achievement reported: \(identifier)")
+                        }
+                    }
+                } else {
+                    print("Achievement \(identifier) already completed.")
+                }
+            }
+        }
 }
 
 extension MatchManager: GKMatchmakerViewControllerDelegate {

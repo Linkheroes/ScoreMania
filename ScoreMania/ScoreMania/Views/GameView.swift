@@ -70,13 +70,19 @@ struct GameView: View {
                                 Button(action: {
                                     if matchManager.game[y][x] == 0 {
                                         matchManager.game[y][x] = matchManager.shapePlaying == "circle" ? 1 : 2
+                                        matchManager.sendString("case:\(y);\(x)")
                                         
                                         if checkWin() {
                                             matchManager.sendString("win")
+                                            matchManager.winGame()
                                             matchManager.inGame = false
                                         } else {
-                                            matchManager.sendString("case:\(y);\(x)")
-                                            matchManager.currentlyPlaying = false
+                                            if checkIfMoveIsPossible() {
+                                                matchManager.currentlyPlaying = false
+                                            } else {
+                                                matchManager.sendString("null")
+                                                matchManager.inGame = false
+                                            }
                                         }
                                     }
                                 }, label: {
@@ -96,7 +102,7 @@ struct GameView: View {
                                         }
                                     }
                                 })
-                                .disabled(!matchManager.currentlyPlaying)
+                                .disabled(!matchManager.currentlyPlaying || matchManager.game[y][x] != 0)
                             }
                             
                             Spacer()
@@ -172,6 +178,21 @@ struct GameView: View {
         }
         
         return false
+    }
+    
+    func checkIfMoveIsPossible() -> Bool {
+        let table = matchManager.game
+        var nb: Int = 0
+
+        for y in 0..<table.count {
+            for x in 0..<table[y].count {
+                if table[y][x] == 0 {
+                    nb += 1
+                }
+            }
+        }
+
+        return nb == 0
     }
     
     func loadPhoto() {

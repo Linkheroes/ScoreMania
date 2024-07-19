@@ -22,7 +22,7 @@ struct MenuView: View {
             Button {
                 matchManager.startMatchmaking()
             } label: {
-                Text("PLAY")
+                Text(matchManager.authenticationState != .authenticated ? "PLAY OFFLINE" : "PLAY")
                     .font(.system(size: 25, weight: .bold, design: .rounded))
             }
             .disabled(matchManager.authenticationState != .authenticated || matchManager.inGame)
@@ -32,11 +32,6 @@ struct MenuView: View {
                 Capsule(style: .circular)
                     .fill(matchManager.authenticationState != .authenticated || matchManager.inGame ? Color(uiColor: .systemGray2) : Color(uiColor: .systemRed))
             )
-            
-            Text(matchManager.authenticationState.rawValue)
-                .font(.headline.weight(.semibold))
-                .foregroundStyle(Color(uiColor: .systemBlue))
-                .padding()
             
             Spacer()
 
