@@ -16,7 +16,6 @@ class MatchManager: NSObject, ObservableObject {
     @Published var currentlyPlaying = false
     @Published var pastGuesses = [PastGuess]()
     
-    @Published var score = 0
     @Published var timeRemaining = maxTimeRamaining
     @Published var lastDataReceive = -1
     @Published var shapePlaying = ""
