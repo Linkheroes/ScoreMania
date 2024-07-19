@@ -2,34 +2,14 @@
 //  ContentView.swift
 //  ScoreMania
 //
-//  Created by Alexandre on 04/07/2024.
+//  Created by Alexandre Ricard on 18/07/2024.
 //
 
 import SwiftUI
-import GameKit
 
 struct ContentView: View {
     var body: some View {
-        TabView() {
-            GameSelectionView()
-                .tabItem {
-                    Label("Games", systemImage: "gamecontroller")
-                }
-        }.onAppear(perform: {
-            authenticateGameCenter()
-        })
-    }
-    
-    func authenticateGameCenter() {
-        GKLocalPlayer.local.authenticateHandler = { viewController, error in
-            if let viewController = viewController {
-                return
-            }
-            
-            if error != nil {
-                return
-            }
-        }
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
