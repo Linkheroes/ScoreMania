@@ -22,7 +22,7 @@ struct MenuView: View {
             Button {
                 matchManager.startMatchmaking()
             } label: {
-                Text(matchManager.authenticationState != .authenticated ? "PLAY OFFLINE" : "PLAY")
+                Text(matchManager.authenticationState != .authenticated ? "play.offline" : "play.online")
                     .font(.system(size: 25, weight: .bold, design: .rounded))
             }
             .disabled(matchManager.authenticationState != .authenticated || matchManager.inGame)

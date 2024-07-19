@@ -5,3 +5,7 @@
   Created by Alexandre Ricard on 19/07/2024.
   
 */
+
+"play.offline" = "PLAY OFFLINE";
+"play.online" = "PLAY ONLINE";
+"game.loose" = "GAME OVER";

@@ -14,14 +14,9 @@ struct GameOverView: View {
         VStack() {
             Spacer ()
             
-            Text("Game Over")
+            Text("game.loose")
                 .font(.system(size: 65, weight: .black, design: .rounded))
                 .foregroundStyle(Color(uiColor: .systemRed))
-            
-            Text("Score \(matchManager.score)")
-                .font(.system(size: 25, weight: .bold, design: .rounded))
-                .foregroundStyle(Color(uiColor: .systemBlue))
-             
             
             Spacer()
             
