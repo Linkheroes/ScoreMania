@@ -2,19 +2,26 @@
 //  ContentView.swift
 //  ScoreMania
 //
-//  Created by Alexandre on 04/07/2024.
+//  Created by Alexandre Ricard on 18/07/2024.
 //
 
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject var matchManager = MatchManager()
+    
     var body: some View {
-        TabView() {
-            GameSelectionView()
-                .tabItem {
-                    Label("Games", systemImage: "gamecontroller")
-                }
+        ZStack() {
+            if matchManager.inGame {
+                GameView(matchManager: matchManager)
+            } else {
+                MenuView(matchManager: matchManager)
+            }
         }
+        .onAppear(perform: {
+            matchManager.authenticatePlayer()
+        })
     }
 }
 
