@@ -14,9 +14,10 @@
 "winner" = "Vous avez gagné !";
 "winner.sentence" = "Votre score au classement général a augmenté de 1 !";
 "looser" = "Vous avez perdu";
-"looser.sentence" = "Vous avez perdu cette partie\nTu peux demander à ton adversaire de rejoué !";
+"looser.sentence" = "Vous avez perdu cette partie\nTu peux demander à ton adversaire de rejouer !";
 "null" = "Match null";
-"null.sentence" = "Aucun gagant durant cette partie\nTu peux demander à ton adversaire de rejoué !";
-"rematch" = "Rejoué !";
+"null.sentence" = "Aucun gagant durant cette partie\nTu peux demander à ton adversaire de rejouer !";
+"rematch" = "Rejouer !";
 "cancel" = "Menu";
 "pending.connection" = "Connexion en cours";
+"player.quit" = "Ton adversaire à quitté la partie !";
