@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct GameView: View {
     @ObservedObject var matchManager: MatchManager
@@ -13,6 +14,8 @@ struct GameView: View {
     
     @State var enemyAvatar: UIImage? = UIImage(systemName: "person.circle")
     @State var selfAvatar: UIImage? = UIImage(systemName: "person.circle")
+    
+    @State var showToast = false;
     
     var body: some View {
         ZStack() {
@@ -204,7 +207,7 @@ struct GameView: View {
                         Text("rematch")
                             .font(.system(size: 18, weight: .bold, design: .rounded))
                     })
-                    .disabled(!matchManager.canReMatch)
+                    .disabled(!matchManager.canTReMatch)
                     .padding(.vertical, 10)
                     .frame(maxWidth: 150)
                     .background(
@@ -254,7 +257,7 @@ struct GameView: View {
                         Text("rematch")
                             .font(.system(size: 18, weight: .bold, design: .rounded))
                     })
-                    .disabled(!matchManager.canReMatch)
+                    .disabled(!matchManager.canTReMatch)
                     .padding(.vertical, 10)
                     .frame(maxWidth: 150)
                     .background(
@@ -304,7 +307,7 @@ struct GameView: View {
                         Text("rematch")
                             .font(.system(size: 18, weight: .bold, design: .rounded))
                     })
-                    .disabled(!matchManager.canReMatch)
+                    .disabled(!matchManager.canTReMatch)
                     .padding(.vertical, 10)
                     .frame(maxWidth: 150)
                     .background(
@@ -323,6 +326,12 @@ struct GameView: View {
             .animation(.easeInOut, value: matchManager.isNull)
             .shadow(radius: 10)
         }
+        .toast(isPresenting: self.$showToast){
+            AlertToast(type: .regular, title: "player.quit")
+        }
+        .onReceive(matchManager.$canTReMatch, perform: { value in
+            self.showToast = value
+        })
     }
     
     func checkWin() -> Bool {

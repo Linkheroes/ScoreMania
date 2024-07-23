@@ -24,8 +24,8 @@ class MatchManager: NSObject, ObservableObject {
     
     @Published var game = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
     
-    @Published var canReMatch = true;
-    var otherPlayerReMatch = false;
+    @Published var canTReMatch = false;
+    @Published var otherPlayerReMatch = false;
     @Published var localPlayerReMatch = false;
     @Published var playerScore = 0
     
@@ -132,7 +132,7 @@ class MatchManager: NSObject, ObservableObject {
                 break
             case "quit":
                 isWinner = true
-                canReMatch = false
+                canTReMatch = true
             
                 winGame()
                 break
@@ -145,7 +145,7 @@ class MatchManager: NSObject, ObservableObject {
             
                 break
             case "norematch":
-                canReMatch = false;
+                canTReMatch = true;
                 
                 break
             default:
@@ -160,7 +160,7 @@ class MatchManager: NSObject, ObservableObject {
         isWinner = false
         isGameOver = false
         isNull = false
-        canReMatch = true
+        canTReMatch = false
         inGame = true
     }
     
@@ -254,6 +254,7 @@ extension MatchManager: GKMatchmakerViewControllerDelegate {
 }
 
 extension MatchManager: GKMatchDelegate {
+    
     func match(_ match: GKMatch, didReceive data: Data, forRecipient recipient: GKPlayer, fromRemotePlayer player: GKPlayer) {
         let content = String(decoding: data, as: UTF8.self)
         
@@ -280,5 +281,16 @@ extension MatchManager: GKMatchDelegate {
     
     func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
         
+    }
+}
+
+extension MatchManager: GKLocalPlayerListener {
+    func player(_ player: GKPlayer, didAccept invite: GKInvite) {
+        print("Invitation accepted by player: \(player.displayName)")
+        print("Invite details: \(invite)")
+        
+        let matchmakingVC = GKMatchmakerViewController(invite: invite)
+        matchmakingVC?.matchmakerDelegate = self
+        rootViewController?.present(matchmakingVC!, animated: true)
     }
 }

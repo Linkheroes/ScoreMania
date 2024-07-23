@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E148B55E2C4A578600028E66 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E148B55C2C4A578500028E66 /* Localizable.strings */; };
+		E17352662C4E49E300FD9C80 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = E17352652C4E49E300FD9C80 /* AlertToast */; };
 		E1AE44CD2C371919009D2C5E /* ScoreManiaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AE44CC2C371919009D2C5E /* ScoreManiaApp.swift */; };
 		E1AE44D12C37191A009D2C5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1AE44D02C37191A009D2C5E /* Assets.xcassets */; };
 		E1AE44D42C37191A009D2C5E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1AE44D32C37191A009D2C5E /* Preview Assets.xcassets */; };
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E17352662C4E49E300FD9C80 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +122,9 @@
 			dependencies = (
 			);
 			name = ScoreMania;
+			packageProductDependencies = (
+				E17352652C4E49E300FD9C80 /* AlertToast */,
+			);
 			productName = ScoreMania;
 			productReference = E1AE44C92C371919009D2C5E /* ScoreMania.app */;
 			productType = "com.apple.product-type.application";
@@ -149,6 +154,9 @@
 				fr,
 			);
 			mainGroup = E1AE44C02C371919009D2C5E;
+			packageReferences = (
+				E17352642C4E49E300FD9C80 /* XCRemoteSwiftPackageReference "AlertToast" */,
+			);
 			productRefGroup = E1AE44CA2C371919009D2C5E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -327,7 +335,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ScoreMania/ScoreMania.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScoreMania/Preview Content\"";
 				DEVELOPMENT_TEAM = CGH547GYT7;
 				ENABLE_PREVIEWS = YES;
@@ -344,7 +352,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.linkheroes.ScoreMania;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -364,7 +372,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ScoreMania/ScoreMania.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScoreMania/Preview Content\"";
 				DEVELOPMENT_TEAM = CGH547GYT7;
 				ENABLE_PREVIEWS = YES;
@@ -381,7 +389,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = fr.linkheroes.ScoreMania;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -416,6 +424,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E17352642C4E49E300FD9C80 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E17352652C4E49E300FD9C80 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E17352642C4E49E300FD9C80 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E1AE44C12C371919009D2C5E /* Project object */;
 }
