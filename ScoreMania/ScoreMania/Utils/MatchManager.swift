@@ -28,6 +28,7 @@ class MatchManager: NSObject, ObservableObject {
     @Published var otherPlayerReMatch = false;
     @Published var localPlayerReMatch = false;
     @Published var playerScore = 0
+    var localPlayerScore = 0
     
     var leaderboardsID = "mania.games.wons"
     
@@ -167,6 +168,14 @@ class MatchManager: NSObject, ObservableObject {
     func winGame() {
         isWinner = true
         
+        if (UserDefaults.standard.integer(forKey: "mania.score") != nil) {
+            UserDefaults.standard.setValue(1, forKey: "mania.score")
+            self.localPlayerScore = 1
+        } else {
+            self.localPlayerScore = UserDefaults.standard.integer(forKey: "mania.score")
+            UserDefaults.standard.setValue(self.localPlayerScore + 1, forKey: "mania.score")
+        }
+        
         print("Score get to game center : \(self.playerScore)")
         
         self.playerScore += 1
@@ -183,6 +192,10 @@ class MatchManager: NSObject, ObservableObject {
         }
         
         reportAchievement(identifier: "mania.achievement.first", percentComplete: 100)
+        reportAchievement(identifier: "Mania.achievement.second", percentComplete: Double((self.localPlayerScore / 5 * 100)))
+        reportAchievement(identifier: "Mania.achievement.third", percentComplete: Double((self.localPlayerScore / 10 * 100)))
+        reportAchievement(identifier: "Mania.achievement.fourth", percentComplete: Double((self.localPlayerScore / 15 * 100)))
+        reportAchievement(identifier: "Mania.achievement.ultimate", percentComplete: Double((self.localPlayerScore / 50 * 100)))
     }
     
     func loadGlobalScore() {
