@@ -20,3 +20,4 @@
 "rematch" = "Rematch !";
 "cancel" = "Back to menu";
 "pending.connection" = "Connection in progress";
+"player.quit" = "Your opponent has left the game!";

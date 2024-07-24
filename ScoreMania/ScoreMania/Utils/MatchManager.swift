@@ -24,10 +24,11 @@ class MatchManager: NSObject, ObservableObject {
     
     @Published var game = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
     
-    @Published var canReMatch = true;
-    var otherPlayerReMatch = false;
+    @Published var canTReMatch = false;
+    @Published var otherPlayerReMatch = false;
     @Published var localPlayerReMatch = false;
     @Published var playerScore = 0
+    var localPlayerScore = 0
     
     var leaderboardsID = "mania.games.wons"
     
@@ -132,7 +133,7 @@ class MatchManager: NSObject, ObservableObject {
                 break
             case "quit":
                 isWinner = true
-                canReMatch = false
+                canTReMatch = true
             
                 winGame()
                 break
@@ -145,7 +146,7 @@ class MatchManager: NSObject, ObservableObject {
             
                 break
             case "norematch":
-                canReMatch = false;
+                canTReMatch = true;
                 
                 break
             default:
@@ -160,12 +161,20 @@ class MatchManager: NSObject, ObservableObject {
         isWinner = false
         isGameOver = false
         isNull = false
-        canReMatch = true
+        canTReMatch = false
         inGame = true
     }
     
     func winGame() {
         isWinner = true
+        
+        if (UserDefaults.standard.integer(forKey: "mania.score") != nil) {
+            UserDefaults.standard.setValue(1, forKey: "mania.score")
+            self.localPlayerScore = 1
+        } else {
+            self.localPlayerScore = UserDefaults.standard.integer(forKey: "mania.score")
+            UserDefaults.standard.setValue(self.localPlayerScore + 1, forKey: "mania.score")
+        }
         
         print("Score get to game center : \(self.playerScore)")
         
@@ -183,6 +192,10 @@ class MatchManager: NSObject, ObservableObject {
         }
         
         reportAchievement(identifier: "mania.achievement.first", percentComplete: 100)
+        reportAchievement(identifier: "Mania.achievement.second", percentComplete: Double((self.localPlayerScore / 5 * 100)))
+        reportAchievement(identifier: "Mania.achievement.third", percentComplete: Double((self.localPlayerScore / 10 * 100)))
+        reportAchievement(identifier: "Mania.achievement.fourth", percentComplete: Double((self.localPlayerScore / 15 * 100)))
+        reportAchievement(identifier: "Mania.achievement.ultimate", percentComplete: Double((self.localPlayerScore / 50 * 100)))
     }
     
     func loadGlobalScore() {
@@ -254,6 +267,7 @@ extension MatchManager: GKMatchmakerViewControllerDelegate {
 }
 
 extension MatchManager: GKMatchDelegate {
+    
     func match(_ match: GKMatch, didReceive data: Data, forRecipient recipient: GKPlayer, fromRemotePlayer player: GKPlayer) {
         let content = String(decoding: data, as: UTF8.self)
         
@@ -280,5 +294,16 @@ extension MatchManager: GKMatchDelegate {
     
     func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
         
+    }
+}
+
+extension MatchManager: GKLocalPlayerListener {
+    func player(_ player: GKPlayer, didAccept invite: GKInvite) {
+        print("Invitation accepted by player: \(player.displayName)")
+        print("Invite details: \(invite)")
+        
+        let matchmakingVC = GKMatchmakerViewController(invite: invite)
+        matchmakingVC?.matchmakerDelegate = self
+        rootViewController?.present(matchmakingVC!, animated: true)
     }
 }
